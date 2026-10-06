@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+type: command
+
+name: prepare_predictive_maintenance
+display_name: Prepare Predictive Maintenance Data
+description: Prepare AI4I 2020 data for model training.
+
+inputs:
+  input_data:
+    type: uri_folder
+
+outputs:
+  output_data:
+    type: uri_folder
+
+code: .
+
+environment: azureml:predictive-maintenance-training:1
+
+command: >-
+  python prepare.py
+  --input_data ${{inputs.input_data}}
+  --output_data ${{outputs.output_data}}

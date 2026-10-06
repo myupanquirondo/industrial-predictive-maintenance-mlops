@@ -1,0 +1,28 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: evaluate_predictive_maintenance
+display_name: Evaluate Predictive Maintenance Model
+description: Evaluate the XGBoost model using PR-AUC, Precision, Recall and F1.
+
+type: command
+
+code: .
+
+environment: azureml:predictive-maintenance-training:3
+
+inputs:
+  model_input:
+    type: uri_folder
+
+  data_input:
+    type: uri_folder
+
+outputs:
+  metrics_output:
+    type: uri_folder
+
+command: >-
+  python evaluate.py
+  --model_input ${{inputs.model_input}}
+  --data_input ${{inputs.data_input}}
+  --metrics_output ${{outputs.metrics_output}}

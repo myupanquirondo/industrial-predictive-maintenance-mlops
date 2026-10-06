@@ -84,3 +84,6 @@ Thumbs.db
 data/
 
 configs/
+# MLflow local tracking
+mlflow.db
+mlruns/

@@ -1,0 +1,28 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+
+name: train_predictive_maintenance
+display_name: Train Predictive Maintenance Model
+description: Train an XGBoost model and track metrics with MLflow.
+
+type: command
+
+code: .
+
+environment: azureml:predictive-maintenance-training:3
+
+inputs:
+  input_data:
+    type: uri_folder
+
+outputs:
+  model_output:
+    type: uri_folder
+
+  metrics_output:
+    type: uri_folder
+
+command: >-
+  python train.py
+  --input_data ${{inputs.input_data}}
+  --model_output ${{outputs.model_output}}
+  --metrics_output ${{outputs.metrics_output}}

@@ -1,0 +1,8 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+
+name: predictive-maintenance-training
+description: Environment for XGBoost training and MLflow tracking.
+
+conda_file: conda.yml
+
+image: mcr.microsoft.com/azureml/openmpi5.0-ubuntu24.04
