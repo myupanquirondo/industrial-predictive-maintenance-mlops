@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+
+name: predictive-maintenance-inference
+description: Environment for predictive maintenance batch inference
+
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+
+conda_file:
+  channels:
+    - conda-forge
+  dependencies:
+    - python=3.10
+    - pip
+    - pip:
+        - pandas==2.3.3
+        - xgboost==3.0.2
+        - cryptography
