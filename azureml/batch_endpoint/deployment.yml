@@ -14,7 +14,7 @@ code_configuration:
   code: .
   scoring_script: score.py
 
-environment: azureml:predictive-maintenance-inference:2
+environment: azureml:predictive-maintenance-inference:3
 
 compute: azureml:batch-cluster
 

@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 import pandas as pd
 from xgboost import XGBClassifier
@@ -73,30 +74,37 @@ def prepare_features(df: pd.DataFrame) -> pd.DataFrame:
 
     return df[FEATURES]
 
-
 def init() -> None:
     global model
 
-    model_dir = Path("/var/azureml-app/azureml-models")
+    model_dir = os.environ.get("AZUREML_MODEL_DIR")
+
+    if not model_dir:
+        raise RuntimeError(
+            "Azure ML no proporcionó la variable "
+            "AZUREML_MODEL_DIR."
+        )
+
+    model_dir = Path(model_dir)
+
+    print("=== BATCH ENDPOINT - INIT ===")
+    print(f"Directorio del modelo: {model_dir}")
 
     model_files = list(model_dir.rglob("model.json"))
 
     if not model_files:
         raise FileNotFoundError(
-            "No se encontró model.json dentro de "
-            "/var/azureml-app/azureml-models."
+            f"No se encontró model.json dentro de {model_dir}"
         )
 
     model_path = model_files[0]
 
-    print("=== BATCH ENDPOINT - INIT ===")
     print(f"Cargando modelo: {model_path}")
 
     model = XGBClassifier()
     model.load_model(model_path)
 
     print("Modelo cargado correctamente.")
-
 
 def run(mini_batch):
     if model is None:
